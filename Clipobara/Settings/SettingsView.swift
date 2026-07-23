@@ -53,7 +53,7 @@ struct SettingsView: View {
                             }
                         )
                     )
-                    Text("macOS will ask for permission to send Command-V into other apps.")
+                    Text("Requires keyboard control: in System Settings → Privacy & Security → Accessibility, click “+” and add Clipobara.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

@@ -165,10 +165,13 @@ final class HistoryPanelController: NSObject, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
         let alert = NSAlert()
         alert.messageText = "Clipobara can't paste automatically"
+        // Sandboxed apps cannot summon the system accessibility prompt and do
+        // not auto-appear in the list, so the user has to add the app manually.
         alert.informativeText = """
-        Allow Clipobara to control the keyboard in \
-        System Settings → Privacy & Security → Accessibility, then try again. \
-        If Clipobara is already listed, remove it and add it back.
+        To paste into other apps, Clipobara needs keyboard control: open \
+        System Settings → Privacy & Security → Accessibility, click “+”, \
+        add Clipobara from your Applications folder, and turn it on. \
+        Then try again.
         """
         alert.addButton(withTitle: "Open System Settings")
         alert.addButton(withTitle: "Cancel")
