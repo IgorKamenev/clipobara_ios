@@ -33,7 +33,7 @@ targets:
         PRODUCT_NAME: Clipobara
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         CODE_SIGN_ENTITLEMENTS: Clipobara/Clipobara.entitlements
-        ENABLE_APP_SANDBOX: NO
+        ENABLE_APP_SANDBOX: YES
       configs:
         # Debug builds get their own bundle id so their Accessibility grant
         # coexists with the released app's (TCC keys entries by bundle id).
