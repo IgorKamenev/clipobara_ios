@@ -7,6 +7,7 @@ struct ClipCardView: View {
     let isSelected: Bool
     let onSelect: () -> Void
     let onDelete: () -> Void
+    let dragProvider: () -> NSItemProvider
 
     var body: some View {
         Button(action: onSelect) {
@@ -28,6 +29,10 @@ struct ClipCardView: View {
             .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
         .buttonStyle(.plain)
+        .simultaneousGesture(
+            TapGesture(count: 2).onEnded { onSelect() }
+        )
+        .onDrag(dragProvider)
         .contextMenu {
             Button("Copy to Clipboard", action: onSelect)
             Divider()

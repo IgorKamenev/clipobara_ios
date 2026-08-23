@@ -111,39 +111,70 @@ final class HistoryPanelController: NSObject, NSWindowDelegate {
             model: model,
             settings: settings,
             onRestore: { [weak self] item in
-                self?.select(item)
+                self?.select(item) ?? false
+            },
+            onDragOut: { [weak self] item in
+                self?.makeDragProvider(for: item) ?? NSItemProvider()
             },
             onClose: { [weak self] in self?.close() }
         )
         panel.contentView = NSHostingView(rootView: rootView)
     }
 
-    private func select(_ item: ClipboardItem) {
-        guard restoreService.restore(item) else { return }
+    @discardableResult
+    private func select(_ item: ClipboardItem) -> Bool {
+        guard restoreService.restore(item) else { return false }
 
         if settings.moveSelectedClipToFront {
             repository.promoteToFront(item)
         }
 
-        let shouldAutoPaste = settings.autoPasteOnSelect
-        if shouldAutoPaste {
-            hideImmediately()
-            // Yield so key/mouse handling finishes before we bounce focus and paste.
-            DispatchQueue.main.async { [weak self] in
+        // Auto-paste is disabled for now; uncomment this block (plus the
+        // presentAccessibilityHint helper below, the AppSettings property,
+        // and the Settings toggle) to bring it back.
+        // let shouldAutoPaste = settings.autoPasteOnSelect
+        // if shouldAutoPaste {
+        //     hideImmediately()
+        //     // Yield so key/mouse handling finishes before we bounce focus and paste.
+        //     DispatchQueue.main.async { [weak self] in
+        //         MainActor.assumeIsolated {
+        //             self?.returnFocusToPreviousApp()
+        //         }
+        //         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+        //             MainActor.assumeIsolated {
+        //                 if !AutoPasteService.paste() {
+        //                     self?.presentAccessibilityHint()
+        //                 }
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     close()
+        // }
+        close()
+        return true
+    }
+
+    private func makeDragProvider(for item: ClipboardItem) -> NSItemProvider {
+        let itemID = item.id
+        return ClipDragService.itemProvider(for: item, repository: repository) { [weak self] in
+            DispatchQueue.main.async {
                 MainActor.assumeIsolated {
-                    self?.returnFocusToPreviousApp()
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-                    MainActor.assumeIsolated {
-                        if !AutoPasteService.paste() {
-                            self?.presentAccessibilityHint()
-                        }
-                    }
+                    self?.dragDidDeliverData(itemID: itemID)
                 }
             }
-        } else {
-            close()
         }
+    }
+
+    /// A drop target consumed the dragged data — treat it like a completed
+    /// hand-off. Fires once per requested representation, hence the guard.
+    private func dragDidDeliverData(itemID: UUID) {
+        guard panel.isVisible else { return }
+        if settings.moveSelectedClipToFront,
+           let item = repository.items.first(where: { $0.id == itemID }) {
+            repository.promoteToFront(item)
+        }
+        close()
     }
 
     /// Opening the panel focuses the SwiftUI search field, which activates the app
@@ -161,24 +192,25 @@ final class HistoryPanelController: NSObject, NSWindowDelegate {
         }
     }
 
-    private func presentAccessibilityHint() {
-        NSApp.activate(ignoringOtherApps: true)
-        let alert = NSAlert()
-        alert.messageText = "Clipobara can't paste automatically"
-        // Sandboxed apps cannot summon the system accessibility prompt and do
-        // not auto-appear in the list, so the user has to add the app manually.
-        alert.informativeText = """
-        To paste into other apps, Clipobara needs keyboard control: open \
-        System Settings → Privacy & Security → Accessibility, click “+”, \
-        add Clipobara from your Applications folder, and turn it on. \
-        Then try again.
-        """
-        alert.addButton(withTitle: "Open System Settings")
-        alert.addButton(withTitle: "Cancel")
-        if alert.runModal() == .alertFirstButtonReturn {
-            AutoPasteService.openAccessibilitySettings()
-        }
-    }
+    // Part of the disabled auto-paste feature; see select(_:).
+    // private func presentAccessibilityHint() {
+    //     NSApp.activate(ignoringOtherApps: true)
+    //     let alert = NSAlert()
+    //     alert.messageText = "Clipobara can't paste automatically"
+    //     // Sandboxed apps cannot summon the system accessibility prompt and do
+    //     // not auto-appear in the list, so the user has to add the app manually.
+    //     alert.informativeText = """
+    //     To paste into other apps, Clipobara needs keyboard control: open \
+    //     System Settings → Privacy & Security → Accessibility, click “+”, \
+    //     add Clipobara from your Applications folder, and turn it on. \
+    //     Then try again.
+    //     """
+    //     alert.addButton(withTitle: "Open System Settings")
+    //     alert.addButton(withTitle: "Cancel")
+    //     if alert.runModal() == .alertFirstButtonReturn {
+    //         AutoPasteService.openAccessibilitySettings()
+    //     }
+    // }
 
     private func hideImmediately() {
         guard panel.isVisible else { return }
@@ -201,8 +233,13 @@ final class HistoryPanelController: NSObject, NSWindowDelegate {
                 model.moveSelection(by: 1, in: repository.items)
                 return nil
             case 36, 76:
-                if let selectedItem = model.selectedItem(in: repository.items) {
-                    select(selectedItem)
+                guard model.commitSelection(at: model.selectedIndex),
+                      let selectedItem = model.selectedItem(in: repository.items)
+                else {
+                    return nil
+                }
+                if !select(selectedItem) {
+                    model.releaseCommit()
                 }
                 return nil
             default:

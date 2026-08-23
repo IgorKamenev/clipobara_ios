@@ -4,7 +4,8 @@ struct HistoryPanelView: View {
     @Bindable var repository: ClipboardRepository
     @Bindable var model: HistoryPanelModel
     @Bindable var settings: AppSettings
-    let onRestore: (ClipboardItem) -> Void
+    let onRestore: (ClipboardItem) -> Bool
+    let onDragOut: (ClipboardItem) -> NSItemProvider
     let onClose: () -> Void
 
     @FocusState private var searchIsFocused: Bool
@@ -73,8 +74,9 @@ struct HistoryPanelView: View {
                                 item: item,
                                 imageData: repository.preferredImageData(for: item),
                                 isSelected: index == model.selectedIndex,
-                                onSelect: { onRestore(item) },
-                                onDelete: { repository.delete(item) }
+                                onSelect: { restoreCommitted(item, at: index) },
+                                onDelete: { repository.delete(item) },
+                                dragProvider: { onDragOut(item) }
                             )
                             .id(item.id)
                         }
@@ -100,6 +102,13 @@ struct HistoryPanelView: View {
                 }
             }
             .frame(height: 176)
+        }
+    }
+
+    private func restoreCommitted(_ item: ClipboardItem, at index: Int) {
+        guard model.commitSelection(at: index) else { return }
+        if !onRestore(item) {
+            model.releaseCommit()
         }
     }
 }

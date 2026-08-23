@@ -38,25 +38,27 @@ struct SettingsView: View {
             Section("History") {
                 Toggle("Monitor clipboard changes", isOn: $settings.isMonitoringEnabled)
                 Toggle("Move selected clip to front", isOn: $settings.moveSelectedClipToFront)
-                VStack(alignment: .leading, spacing: 4) {
-                    Toggle(
-                        "Paste automatically after selecting",
-                        isOn: Binding(
-                            get: { settings.autoPasteOnSelect },
-                            set: { newValue in
-                                settings.autoPasteOnSelect = newValue
-                                if newValue, !AutoPasteService.requestAccessibilityAccess() {
-                                    // No second system prompt will appear; send the
-                                    // user straight to the Accessibility pane.
-                                    AutoPasteService.openAccessibilitySettings()
-                                }
-                            }
-                        )
-                    )
-                    Text("Requires keyboard control: in System Settings → Privacy & Security → Accessibility, click “+” and add Clipobara.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
+                // Auto-paste is disabled for now; uncomment together with the
+                // AppSettings property and the HistoryPanelController branch.
+                // VStack(alignment: .leading, spacing: 4) {
+                //     Toggle(
+                //         "Paste automatically after selecting",
+                //         isOn: Binding(
+                //             get: { settings.autoPasteOnSelect },
+                //             set: { newValue in
+                //                 settings.autoPasteOnSelect = newValue
+                //                 if newValue, !AutoPasteService.requestAccessibilityAccess() {
+                //                     // No second system prompt will appear; send the
+                //                     // user straight to the Accessibility pane.
+                //                     AutoPasteService.openAccessibilitySettings()
+                //                 }
+                //             }
+                //         )
+                //     )
+                //     Text("Requires keyboard control: in System Settings → Privacy & Security → Accessibility, click “+” and add Clipobara.")
+                //         .font(.caption)
+                //         .foregroundStyle(.secondary)
+                // }
                 Stepper(
                     "Keep up to \(settings.maximumItemCount) items",
                     value: $settings.maximumItemCount,
@@ -104,7 +106,7 @@ struct SettingsView: View {
             }
 
             Section("Privacy") {
-                Text("Clipobara stores history only on this Mac. It uses no network, analytics, or cloud sync. Selecting a clip updates the system clipboard; optional auto-paste sends Command-V after you allow keyboard control.")
+                Text("Clipobara stores history only on this Mac. It uses no network, analytics, or cloud sync. Selecting a clip updates the system clipboard; you can also drag clips straight into other applications.")
                     .foregroundStyle(.secondary)
             }
         }

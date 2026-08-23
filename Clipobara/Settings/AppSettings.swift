@@ -14,7 +14,9 @@ final class AppSettings {
         static let shortcutKeyCode = "shortcutKeyCode"
         static let shortcutModifiers = "shortcutModifiers"
         static let moveSelectedClipToFront = "moveSelectedClipToFront"
-        static let autoPasteOnSelect = "autoPasteOnSelect"
+        // Auto-paste is disabled for now; the key is kept so an existing
+        // user preference survives until the feature returns.
+        // static let autoPasteOnSelect = "autoPasteOnSelect"
     }
 
     private let defaults: UserDefaults
@@ -35,9 +37,9 @@ final class AppSettings {
         didSet { defaults.set(moveSelectedClipToFront, forKey: Key.moveSelectedClipToFront) }
     }
 
-    var autoPasteOnSelect: Bool {
-        didSet { defaults.set(autoPasteOnSelect, forKey: Key.autoPasteOnSelect) }
-    }
+    // var autoPasteOnSelect: Bool {
+    //     didSet { defaults.set(autoPasteOnSelect, forKey: Key.autoPasteOnSelect) }
+    // }
 
     var excludedBundleIdentifiers: Set<String> {
         didSet {
@@ -54,7 +56,7 @@ final class AppSettings {
             Key.maximumItemCount: 500,
             Key.maximumStorageBytes: 512 * 1_024 * 1_024,
             Key.moveSelectedClipToFront: true,
-            Key.autoPasteOnSelect: false,
+            // Key.autoPasteOnSelect: false,
             Key.shortcutKeyCode: Int(GlobalShortcut.default.keyCode),
             Key.shortcutModifiers: Int(GlobalShortcut.default.carbonModifiers),
             Key.excludedBundleIdentifiers: [
@@ -68,7 +70,7 @@ final class AppSettings {
         maximumItemCount = defaults.integer(forKey: Key.maximumItemCount)
         maximumStorageBytes = defaults.integer(forKey: Key.maximumStorageBytes)
         moveSelectedClipToFront = defaults.bool(forKey: Key.moveSelectedClipToFront)
-        autoPasteOnSelect = defaults.bool(forKey: Key.autoPasteOnSelect)
+        // autoPasteOnSelect = defaults.bool(forKey: Key.autoPasteOnSelect)
         excludedBundleIdentifiers = Set(
             defaults.stringArray(forKey: Key.excludedBundleIdentifiers) ?? []
         )

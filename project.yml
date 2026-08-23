@@ -15,10 +15,10 @@ settings:
     GENERATE_INFOPLIST_FILE: YES
     CODE_SIGN_STYLE: Automatic
     DEVELOPMENT_TEAM: 6RLH7FU83R
-    MARKETING_VERSION: "1.0.1"
-    CURRENT_PROJECT_VERSION: 10101
+    MARKETING_VERSION: "1.0.2"
+    CURRENT_PROJECT_VERSION: 10200
     ENABLE_HARDENED_RUNTIME: YES
-    PRODUCT_BUNDLE_IDENTIFIER: com.clipbara
+    PRODUCT_BUNDLE_IDENTIFIER: com.clipobara
     INFOPLIST_KEY_LSUIElement: YES
     INFOPLIST_KEY_CFBundleDisplayName: Clipobara
     INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
@@ -38,7 +38,7 @@ targets:
         # Debug builds get their own bundle id so their Accessibility grant
         # coexists with the released app's (TCC keys entries by bundle id).
         Debug:
-          PRODUCT_BUNDLE_IDENTIFIER: com.clipbara.dev
+          PRODUCT_BUNDLE_IDENTIFIER: com.clipobara.dev
     scheme:
       testTargets:
         - ClipobaraTests
@@ -57,4 +57,4 @@ targets:
       - target: Clipobara
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.clipbara.ClipobaraTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.clipobara.ClipobaraTests

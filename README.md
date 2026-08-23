@@ -13,16 +13,18 @@ bottom history panel with `Command-Shift-V` by default.
 - Supports search, mouse selection, arrow keys (including Up/Down), Return, and Escape.
 - Always opens at the leftmost/newest clip without a scroll animation.
 - Optionally moves a selected clip to the front of history (on by default).
-- Optionally auto-pastes after selecting via synthesized `Command-V` (off by default;
-  requires Post Event permission from macOS).
+- Supports dragging a clip from the panel straight into another application —
+  no permissions required.
 - Allows the global history shortcut to be recorded in Settings.
 - Stores metadata with SwiftData and large payloads as files in Application Support.
 - Deduplicates adjacent copies and enforces configurable item/storage limits.
 - Excludes common password managers by default and supports custom bundle IDs.
 - Has no networking, analytics, or cloud sync.
 
-Selecting an item makes it the current system clipboard. With auto-paste disabled
-(the default), paste normally in the destination application with `Command-V`.
+Selecting an item makes it the current system clipboard: paste normally in the
+destination application with `Command-V`, or skip the clipboard and drag a card
+straight into the destination. (An auto-paste mode that synthesizes `Command-V`
+exists in the code base but is currently disabled.)
 
 ## Build
 
@@ -68,12 +70,13 @@ regeneration may still use the old settings; build once more to apply them.
 2. Copy content in any application.
 3. Press `Command-Shift-V`.
 4. Search or use arrow keys, then click a card or press Return.
-5. Paste normally with `Command-V`, or enable auto-paste in Settings.
+5. Paste normally with `Command-V`, or drag a card straight into the
+   destination application.
 
 The menu bar provides monitoring pause/resume, history clearing, launch-at-login,
 settings, and quit actions. The history shortcut can be changed in Settings. If
 another app already owns the selected shortcut, Clipobara keeps the previous shortcut
-and shows an error. Auto-paste asks for keyboard control permission when enabled.
+and shows an error.
 
 ## Local data and privacy
 
@@ -99,13 +102,14 @@ xcodebuild \
 ```
 
 Unit tests cover hashing, ordering, manifest serialization, selection bounds,
-payload persistence, and adjacent-copy deduplication. Manual release checks should
-include TextEdit, Safari/Chrome, Finder, Preview, screenshots, multiple files,
-large payloads, multiple displays, Spaces, full-screen apps, restart persistence,
+payload persistence, adjacent-copy deduplication, and drag item providing.
+Manual release checks should include TextEdit, Safari/Chrome, Finder, Preview,
+screenshots, multiple files, large payloads, multiple displays, Spaces,
+full-screen apps, restart persistence, drag & drop into other applications,
 and shortcut-conflict behavior.
 
 ## Distribution
 
-Hardened Runtime is enabled. App Sandbox is off so auto-paste can synthesize
-`Command-V`. Set your Apple Developer team, archive for Developer ID distribution,
-then sign and notarize as needed.
+Hardened Runtime and App Sandbox are both enabled for App Store submission.
+Neither clip selection nor drag & drop needs any permission. Set your Apple
+Developer team, archive, then sign and notarize as needed.

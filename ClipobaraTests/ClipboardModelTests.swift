@@ -60,6 +60,29 @@ struct ClipboardModelTests {
         #expect(model.presentationSequence == previousPresentation + 1)
     }
 
+    @Test @MainActor
+    func commitSelectionIgnoresASecondActivation() {
+        let model = HistoryPanelModel()
+
+        #expect(model.commitSelection(at: 2))
+        #expect(model.selectedIndex == 2)
+        #expect(model.hasCommittedSelection)
+
+        #expect(!model.commitSelection(at: 0))
+        #expect(model.selectedIndex == 2)
+
+        model.releaseCommit()
+        #expect(!model.hasCommittedSelection)
+        #expect(model.commitSelection(at: 0))
+        #expect(model.selectedIndex == 0)
+
+        model.reset()
+        #expect(!model.hasCommittedSelection)
+        #expect(model.selectedIndex == 0)
+        #expect(model.commitSelection(at: 1))
+        #expect(model.selectedIndex == 1)
+    }
+
     @Test
     func defaultShortcutHasReadableName() {
         #expect(GlobalShortcut.default.displayName.contains("V"))
@@ -74,6 +97,7 @@ struct ClipboardModelTests {
 
         let settings = AppSettings(defaults: defaults)
         #expect(settings.moveSelectedClipToFront)
-        #expect(!settings.autoPasteOnSelect)
+        // Auto-paste is disabled for now; restore with the AppSettings property.
+        // #expect(!settings.autoPasteOnSelect)
     }
 }

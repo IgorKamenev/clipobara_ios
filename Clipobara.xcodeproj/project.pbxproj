@@ -14,8 +14,10 @@
 		2A2E4A5602217B5077EAE2A4 /* PasteboardSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95086D4352E6B00D2BCF066C /* PasteboardSnapshot.swift */; };
 		2DCD971EE6DBD277AE6083ED /* PasteboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63ECD66A28ACBC004BA8B18 /* PasteboardMonitor.swift */; };
 		3F7132147218C8A3928B969A /* ClipobaraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4A54B0AD11A2A6E18D832 /* ClipobaraApp.swift */; };
+		439408F34BADA1CBF901B78A /* ClipDragServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FF16CDC5D4E2DBC63E8056 /* ClipDragServiceTests.swift */; };
 		50E3A0FA02FB32630D4970FD /* ClipboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C270C662A738D6FAF46F8C1E /* ClipboardRepository.swift */; };
 		64A14DF0A3AF7EC9FFAEEE13 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C058A75CF599B5A9755A54EA /* ShortcutRecorderView.swift */; };
+		691F2EDEF1DC21817F591242 /* ClipDragService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031966F2107FA186DE28C335 /* ClipDragService.swift */; };
 		8275AFF49A0A708A0831564F /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C53B9361BD575E97F7418B /* AppController.swift */; };
 		87CA178EA16BF50B014F618E /* GlobalHotKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E008E4A04FE2B9A8DD43509 /* GlobalHotKeyService.swift */; };
 		B8E2C45780318303538EF663 /* PasteboardSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669F6845C9BEF86BF717C7E4 /* PasteboardSnapshotTests.swift */; };
@@ -44,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		031966F2107FA186DE28C335 /* ClipDragService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipDragService.swift; sourceTree = "<group>"; };
 		099CD9E791482B8F7F637A42 /* ClipobaraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipobaraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DE68A4A247C359F2DC09D9F /* project.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = project.yml; sourceTree = "<group>"; };
 		28838648C2D23F9B15B00237 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		DA939FF2B988B601F68826BB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E1A02258AC32A3886E9E0923 /* SettingsWindowBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowBridge.swift; sourceTree = "<group>"; };
 		E23DD55802BC28DC9CD6C106 /* HistoryPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPanelView.swift; sourceTree = "<group>"; };
+		E7FF16CDC5D4E2DBC63E8056 /* ClipDragServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipDragServiceTests.swift; sourceTree = "<group>"; };
 		F20A73EEB5E649F36325CF4F /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				9D9AFAFFFE7DC5BB9697D828 /* AutoPasteService.swift */,
+				031966F2107FA186DE28C335 /* ClipDragService.swift */,
 				B63ECD66A28ACBC004BA8B18 /* PasteboardMonitor.swift */,
 				3F6E503447948663925B1114 /* PasteboardRestoreService.swift */,
 				95086D4352E6B00D2BCF066C /* PasteboardSnapshot.swift */,
@@ -100,6 +105,7 @@
 			children = (
 				8D7C54ECA0000764B2BAB4F8 /* ClipboardModelTests.swift */,
 				51EBDFCD20BFC0295B5BDF7B /* ClipboardRepositoryTests.swift */,
+				E7FF16CDC5D4E2DBC63E8056 /* ClipDragServiceTests.swift */,
 				669F6845C9BEF86BF717C7E4 /* PasteboardSnapshotTests.swift */,
 			);
 			path = ClipobaraTests;
@@ -299,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				439408F34BADA1CBF901B78A /* ClipDragServiceTests.swift in Sources */,
 				DD2998B6EA6ABBA65D214C94 /* ClipboardModelTests.swift in Sources */,
 				094D31F2C72258772E003ED5 /* ClipboardRepositoryTests.swift in Sources */,
 				B8E2C45780318303538EF663 /* PasteboardSnapshotTests.swift in Sources */,
@@ -314,6 +321,7 @@
 				FAF4C2CD4CE2B4159679E348 /* AppSettings.swift in Sources */,
 				C63CCD36F1CBC3144AD9DD7A /* AutoPasteService.swift in Sources */,
 				DE3C257D4212773DE02C99F0 /* ClipCardView.swift in Sources */,
+				691F2EDEF1DC21817F591242 /* ClipDragService.swift in Sources */,
 				C72C62DAD8EB272F73FF3114 /* ClipboardItem.swift in Sources */,
 				50E3A0FA02FB32630D4970FD /* ClipboardRepository.swift in Sources */,
 				3F7132147218C8A3928B969A /* ClipobaraApp.swift in Sources */,
@@ -354,6 +362,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_NAME = Clipobara;
 				SDKROOT = macosx;
 			};
@@ -370,7 +379,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.clipbara.dev;
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clipobara.dev;
 				PRODUCT_NAME = Clipobara;
 				SDKROOT = macosx;
 			};
@@ -411,7 +421,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 10101;
+				CURRENT_PROJECT_VERSION = 10200;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6RLH7FU83R;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -436,11 +446,11 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSUIElement = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clipbara;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clipobara;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -484,7 +494,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 10101;
+				CURRENT_PROJECT_VERSION = 10200;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6RLH7FU83R;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -503,10 +513,10 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSUIElement = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clipbara;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clipobara;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -525,7 +535,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.clipbara.ClipobaraTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clipobara.ClipobaraTests;
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clipobara.app/Contents/MacOS/Clipobara";
 			};
@@ -541,7 +551,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.clipbara.ClipobaraTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clipobara.ClipobaraTests;
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clipobara.app/Contents/MacOS/Clipobara";
 			};
